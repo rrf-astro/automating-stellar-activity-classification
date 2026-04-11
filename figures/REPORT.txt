@@ -1,0 +1,165 @@
+
+========================================================================
+  STELLAR ACTIVITY PIPELINE — COMPLETE METRICS REPORT
+  Generated : 2026-04-10 22:08
+  Notebook  : principal.ipynb
+========================================================================
+
+────────────────────────────────────────────────────────────────────────
+  DATA FLOW
+────────────────────────────────────────────────────────────────────────
+  N unique stars (CLS table3.csv)      : 710
+  N after Nobs >= 10 filter            : 636   (removed 74)
+  N after outlier removal (S > 2.0)    : 626   (removed 10)
+  PCA 2D explained variance            : 79.40%
+
+────────────────────────────────────────────────────────────────────────
+  K-MEANS (6D scaled feature space)
+────────────────────────────────────────────────────────────────────────
+  k optimal                            : 2
+  Cluster 0 (Active)                   : 106 stars  (16.9%)
+  Cluster 1 (Inactive)                 : 520 stars  (83.1%)
+  Silhouette Score                     : 0.6106
+  Davies-Bouldin Index                 : 0.7255
+  Calinski-Harabász Index              : 600.1
+
+────────────────────────────────────────────────────────────────────────
+  HDBSCAN (UMAP 2D manifold)
+────────────────────────────────────────────────────────────────────────
+  N clusters                           : 2
+  N noise (deeply quiescent stars)     : 74  (11.8%)
+
+────────────────────────────────────────────────────────────────────────
+  ROBUSTNESS A — UMAP SENSITIVITY
+────────────────────────────────────────────────────────────────────────
+  n_neighbors tested                   : [5, 15, 30, 50]
+  Silhouette Score (range)             : 0.6106 ± 0.0000
+  Davies-Bouldin (range)               : 0.7255 ± 0.0000
+
+────────────────────────────────────────────────────────────────────────
+  ROBUSTNESS B — ABLATION 6D vs 4D (k=2)
+────────────────────────────────────────────────────────────────────────
+  Silhouette  6D / 4D                  : 0.6106 / 0.5468
+  Davies-Bouldin 6D / 4D               : 0.7255 / 0.8563
+  Adjusted Rand Index                  : 1.0000
+
+────────────────────────────────────────────────────────────────────────
+  ROBUSTNESS C — BOOTSTRAP (n=200)
+────────────────────────────────────────────────────────────────────────
+  Score on full sample                 : 0.6106
+  Bootstrap mean ± std                 : 0.6145 ± 0.0173
+  95% CI                               : [0.5745, 0.6456]
+
+────────────────────────────────────────────────────────────────────────
+  TABLE 1 — CLUSTER FEATURE PROFILES (CENTROIDS)
+────────────────────────────────────────────────────────────────────────
+  Feature                 C0 Active    C1 Inactive     KW p-value   Status
+  ---------------------- ----------   ------------   ------------   ------------
+  mean                        1.103          0.228       2.25e-58   Significant
+  std                         0.100          0.010       9.89e-59   Significant
+  skew                        0.544          0.111       5.62e-04   Significant
+  kurtosis                    1.562          1.327       3.43e-01   —
+  amplitude_p95_p5            0.293          0.029       1.36e-58   Significant
+  median                      1.093          0.228       3.48e-58   Significant
+  ls_period                     N/A            N/A    — (Imputed)   — (Imputed)
+  ls_power                      N/A            N/A    — (Imputed)   — (Imputed)
+
+────────────────────────────────────────────────────────────────────────
+  ROBUSTNESS E — FGK SUBSET
+────────────────────────────────────────────────────────────────────────
+  N FGK stars retained                 : 626
+  N additionally removed               : 0
+  Optimal k (FGK only)                 : 2
+  Silhouette at k=2                    : 0.6106
+
+────────────────────────────────────────────────────────────────────────
+  KRUSKAL-WALLIS (feature separability between clusters)
+────────────────────────────────────────────────────────────────────────
+  mean             p = 2.25e-58  ✓
+  std              p = 9.89e-59  ✓
+  skew             p = 5.62e-04  ✓
+  kurtosis         p = 3.43e-01  ✗
+  amplitude_p95_p5 p = 1.36e-58  ✓
+  median           p = 3.48e-58  ✓
+
+────────────────────────────────────────────────────────────────────────
+  TABLE 1 — CLUSTER CENTROIDS + STATISTICAL SIGNIFICANCE
+────────────────────────────────────────────────────────────────────────
+  Feature            C0 (Active) C1 (Inactive)   p-value (K-W)     Status
+  ───────────────────────────────────────────────────────────────────────
+  mean                  1.1034     0.2284   2.25e-58  ✓  Significant
+  std                   0.1004     0.0097   9.89e-59  ✓  Significant
+  skew                  0.5444     0.1106   5.62e-04  ✓  Significant
+  kurtosis              1.5622     1.3265   3.43e-01  ✗  Not significant
+  amplitude_p95_p5      0.2930     0.0288   1.36e-58  ✓  Significant
+  median                1.0927     0.2277   3.48e-58  ✓  Significant
+  ls_period                n/a        n/a   — (Imputed)
+  ls_power                 n/a        n/a   — (Imputed)
+
+========================================================================
+  MANUSCRIPT SNIPPETS  (copy-paste ready)
+========================================================================
+
+ABSTRACT:
+  "...applied to 626 solar-type stars from the California Legacy Survey
+   (10 late-type outliers with mean S-index > 2.0 were excluded)..."
+
+TABLE 1 (centroids + KW):
+  Use the TABLE 1 block above directly — values are live from cluster_profiles_mean.
+  Copy format:
+    Feature | C0 (Active) | C1 (Inactive) | KW p-value | Status
+    Paste values from the section above into your LaTeX table.
+
+SEC 2.1 (sample):
+  "After removing 74 stars with fewer than 10 observations and
+   10 late-type outliers (mean S-index > 2.0), 626 stars were
+   retained. PCA retains 79.4% of variance in two components."
+
+SEC 2.5.1 (clustering metrics):
+  "Internal validation unanimously favours k=2: Silhouette Score = 0.6106,
+   Davies-Bouldin Index = 0.7255, Calinski-Harabász Index = 600."
+
+SEC 3.1 (cluster sizes):
+  "Cluster 0 (Active Branch):   N = 106  (16.9%)
+   Cluster 1 (Inactive Branch): N = 520  (83.1%)"
+
+SEC 3.2 (Kruskal-Wallis):
+  "The separation is driven by activity level and variability
+   (mean, std, amplitude: p < 10^-57), with a secondary contribution
+   from asymmetry (skew: p = 5.6e-04). Only kurtosis proved
+   non-discriminating (p = 0.34)."
+
+SEC 3.3 (HDBSCAN):
+  "HDBSCAN identified 2 clusters and 74 topologically isolated
+   stars (11.8%), concentrated in the deeply quiescent tail
+   (log R'HK ≈ -5.0 to -5.1)."
+
+SEC 4.3 — UMAP sensitivity:
+  "The Silhouette Score (0.611) and Davies-Bouldin Index (0.726)
+   are identical across all tested values of n_neighbors in [5, 15, 30, 50],
+   confirming the topology recovered by UMAP is insensitive to this
+   hyperparameter choice."
+
+SEC 4.3 — Ablation:
+  "6D vs 4D ablation: ARI = 1.0000 (Sil_6D = 0.6106,
+   Sil_4D = 0.5468), confirming collinear pairs do not bias the partition."
+
+SEC 4.3 — Bootstrap:
+  "Bootstrap resampling (n=200) yields Silhouette Score
+   0.615 +/- 0.017 (95% CI [0.574, 0.646]),
+   consistent with the full-sample score of 0.611."
+
+SEC 4.3 — FGK subset:
+  "The S > 2.0 removal criterion effectively excludes all late-type
+   contaminants — all 626 retained stars satisfy the FGK criterion,
+   and the optimal partition remains k=2 (Silhouette = 0.611)."
+
+TABLE 1 (LaTeX-ready):
+  mean             & 1.103 & 0.228 & 2.25e-58 & Significant \\
+  std              & 0.100 & 0.010 & 9.89e-59 & Significant \\
+  skew             & 0.544 & 0.111 & 5.62e-04 & Significant \\
+  kurtosis         & 1.562 & 1.327 & 0.34 & — \\
+  amplitude_p95_p5 & 0.293 & 0.029 & 1.36e-58 & Significant \\
+  median           & 1.093 & 0.228 & 3.48e-58 & Significant \\
+  ls\_period      & nan & nan & — & (Imputed) \\
+  ls\_power       & nan & nan & — & (Imputed) \\
