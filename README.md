@@ -31,8 +31,8 @@ You will need **Python 3** and **Jupyter Notebook** installed. The main librarie
 
 1.  Clone this repository:
     ```bash
-    git clone [https://github.com/rrf-astro/stellar-activity-taxonomy_2025.git](https://github.com/rrf-astro/stellar-activity-taxonomy_2025.git)
-    cd stellar-activity-taxonomy_2025
+    git clone [https://github.com/rrf-astro/automating-stellar-activity-classification.git](https://github.com/rrf-astro/automating-stellar-activity-classification.git)
+    cd automating-stellar-activity-classification
     ```
 
 2.  Install dependencies (manually or via requirements if available):
