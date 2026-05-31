@@ -55,8 +55,10 @@ The provided tables (`tableX.csv`) contain processed data essential for the prop
 
 If you use this data or code in your research, please cite the original work:
 
-> *[Insert your article reference here when available]*
-> *Example: Silva, R. R. et al. (2025). Stellar Activity Taxonomy...*
+* **Automating the classification of stellar activity: An unsupervised machine learning pipeline for large-scale surveys**
+  Rafael Ramon Ferreira, Bernardo Gonçalves, Airton Borin, Robson Humberto Rosa.
+  *Physica Scripta*, 2026.
+  [🔗 DOI: 10.1088/1402-4896/ae6a49](https://doi.org/10.1088/1402-4896/ae6a49)
 
 ## 📧 Contact
 
